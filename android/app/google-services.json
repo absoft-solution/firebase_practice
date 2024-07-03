@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "629317851224",
+    "project_id": "fir-practice-absoft",
+    "storage_bucket": "fir-practice-absoft.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:629317851224:android:9f30b28e006f33581a122d",
+        "android_client_info": {
+          "package_name": "com.absoftsolution.firebasse_practice"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOjjtkGhZPfE6F5M9SD6tKR87KIFQzE14"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
