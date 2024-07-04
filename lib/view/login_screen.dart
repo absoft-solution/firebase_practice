@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:firebasse_practice/view/home_screen.dart';
+import 'package:firebasse_practice/view/post_screen.dart';
 import 'package:firebasse_practice/view/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -23,7 +24,7 @@ void login(){
       email: _emailController.text.toString(), 
       password: _passwordController.text.toString()).then((value){
         Fluttertoast.showToast(msg: "Login Successful");
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>PostScreen()));
   }).catchError((error){
 if(error is FirebaseAuthException){
   String errorMessage;

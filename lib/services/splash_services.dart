@@ -5,6 +5,8 @@ import 'package:firebasse_practice/view/home_screen.dart';
 import 'package:firebasse_practice/view/login_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../view/post_screen.dart';
+
 class SplashServices {
 
   void isLogin(BuildContext context) {
@@ -12,7 +14,7 @@ class SplashServices {
     final user = auth.currentUser;
 
     if (user != null) {
-    Timer(Duration(seconds: 5),()=> Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen())));
+    Timer(Duration(seconds: 5),()=> Navigator.push(context, MaterialPageRoute(builder: (context)=>PostScreen())));
     }
     else
       {
