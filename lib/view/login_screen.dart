@@ -1,5 +1,7 @@
 import 'package:firebasse_practice/view/sign_up_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -37,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 'Login to your account',
                 style: TextStyle(
                   fontSize: 18.0,
-                  color: Colors.grey[600],
+                  color: Colors.grey,
                 ),
               ),
               SizedBox(height: 40.0),
@@ -52,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         labelText: 'Email',
                         prefixIcon: Icon(Icons.email),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
+                          borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
                       validator: (value) {
@@ -73,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         labelText: 'Password',
                         prefixIcon: Icon(Icons.lock),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
+                          borderRadius: BorderRadius.circular(10),
                         ),
                       ),
                       validator: (value) {
