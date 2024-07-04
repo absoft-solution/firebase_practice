@@ -121,7 +121,7 @@ FirebaseAuth auth=FirebaseAuth.instance;
                               password: _passwordController.text.toString(),
                             ).then((value) {
                               Fluttertoast.showToast(msg: 'Account created successfully');
-                              Navigator.pushReplacement(
+                              Navigator.push(
                                 context,
                                 MaterialPageRoute(builder: (context) => LoginScreen()),
                               );

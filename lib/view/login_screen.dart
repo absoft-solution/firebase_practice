@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:firebasse_practice/view/home_screen.dart';
 import 'package:firebasse_practice/view/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,7 +17,31 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
+  FirebaseAuth auth =FirebaseAuth.instance;
+void login(){
+  auth.signInWithEmailAndPassword(
+      email: _emailController.text.toString(), 
+      password: _passwordController.text.toString()).then((value){
+        Fluttertoast.showToast(msg: "Login Successful");
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
+  }).catchError((error){
+if(error is FirebaseAuthException){
+  String errorMessage;
+  switch(error.code){
+    case 'invalid-credential':
+      errorMessage = 'The email or password is incorrect';
+      break;
+    default:
+      errorMessage = 'An undefined Error happened. Error code: ${error.code}';
+  }
+  Fluttertoast.showToast(msg: errorMessage);
+}
+else{
+  Fluttertoast.showToast(msg: error.toString());
+}
+  });
+}
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            // Perform login action
+                            login();
                           }
                         },
                         style: ElevatedButton.styleFrom(
