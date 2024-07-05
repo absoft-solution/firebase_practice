@@ -11,19 +11,28 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  SplashServices splashServices=SplashServices();
+  SplashServices splashServices = SplashServices();
+
   @override
   void initState() {
     splashServices.isLogin(context);
     // splashServices.isLogin(context);
     super.initState();
   }
-  @override
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Center(child: Text("Splash Screen",style: TextStyle(fontSize: 50,color: Colors.white),)),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image(image: AssetImage("assets/images/logo.png")),
+          ],
+        ),
+      ),
     );
   }
 }

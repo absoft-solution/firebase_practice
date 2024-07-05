@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import 'login_with_phone_screen.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -18,31 +20,39 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  FirebaseAuth auth =FirebaseAuth.instance;
-void login(){
-  auth.signInWithEmailAndPassword(
-      email: _emailController.text.toString(), 
-      password: _passwordController.text.toString()).then((value){
-        Fluttertoast.showToast(msg: "Login Successful");
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>PostScreen()));
-  }).catchError((error){
-if(error is FirebaseAuthException){
-  String errorMessage;
-  switch(error.code){
-    case 'invalid-credential':
-      errorMessage = 'The email or password is incorrect';
-      break;
-    default:
-      errorMessage = 'An undefined Error happened. Error code: ${error.code}';
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+  void login() {
+    auth
+        .signInWithEmailAndPassword(
+            email: _emailController.text.toString(),
+            password: _passwordController.text.toString())
+        .then((value) {
+      Fluttertoast.showToast(msg: "Login Successful");
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => PostScreen()));
+    }).catchError((error) {
+      if (error is FirebaseAuthException) {
+        String errorMessage;
+        switch (error.code) {
+          case 'invalid-credential':
+            errorMessage = 'The email or password is incorrect';
+            break;
+          case 'network-request-failed':
+            errorMessage =
+                'Network error: Please check your internet connection.';
+            break;
+          default:
+            errorMessage =
+                'An undefined Error happened. Error code: ${error.code}';
+        }
+        Fluttertoast.showToast(msg: errorMessage);
+      } else {
+        Fluttertoast.showToast(msg: error.toString());
+      }
+    });
   }
-  Fluttertoast.showToast(msg: errorMessage);
-}
-else{
-  Fluttertoast.showToast(msg: error.toString());
-}
-  });
-}
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -169,7 +179,10 @@ else{
               Center(
                 child: TextButton(
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>SignUpScreen()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SignUpScreen()));
                   },
                   child: Text(
                     'Create an account',
@@ -179,6 +192,30 @@ else{
                   ),
                 ),
               ),
+              SizedBox(height: 5.0),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => LoginWithPhoneScreen()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                  ),
+                  child: Text(
+                    'Login with Phone Number',
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              )
             ],
           ),
         ),

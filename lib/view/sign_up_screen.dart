@@ -37,6 +37,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
             errorMessage =
                 'The email address is already in use by another account.';
             break;
+          case 'network-request-failed':
+            errorMessage =
+                'Network error: Please check your internet connection.';
           case 'invalid-email':
             errorMessage = 'The email address is not valid.';
             break;
