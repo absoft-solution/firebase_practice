@@ -37,10 +37,9 @@ class _AddPostScreenState extends State<AddPostScreen> {
             ),
             ElevatedButton(
               onPressed: () {
-                databaseRef
-                    .child(DateTime.now().microsecondsSinceEpoch.toString())
-                    .set({
-                  'id': DateTime.now().microsecondsSinceEpoch.toString(),
+                String id = DateTime.now().microsecondsSinceEpoch.toString();
+                databaseRef.child(id).set({
+                  'id': id,
                   'Post': _postController.text.toString(),
                 }).then((value) {
                   Fluttertoast.showToast(msg: "Post Added");

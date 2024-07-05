@@ -13,9 +13,46 @@ class PostScreen extends StatefulWidget {
   State<PostScreen> createState() => _PostScreenState();
 }
 
+final _editController = TextEditingController();
+
 class _PostScreenState extends State<PostScreen> {
   final auth = FirebaseAuth.instance;
   final databaseRef = FirebaseDatabase.instance.ref("Post");
+
+  Future<void> MyDialog(String title, String id) async {
+    _editController.text = title;
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Update"),
+            content: Container(
+              child: TextFormField(
+                controller: _editController,
+              ),
+            ),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text("Cancel")),
+              TextButton(
+                  onPressed: () {
+                    databaseRef.child(id).update({
+                      'Post': _editController.text.toString(),
+                    }).then((value) {
+                      Navigator.pop(context);
+                    }).catchError((e) {
+                      Fluttertoast.showToast(msg: e.toString());
+                      Navigator.pop(context);
+                    });
+                  },
+                  child: Text("Update")),
+            ],
+          );
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,6 +132,32 @@ class _PostScreenState extends State<PostScreen> {
                         return ListTile(
                           title: Text(snapshot.child('Post').value.toString()),
                           subtitle: Text(snapshot.child('id').value.toString()),
+                          trailing: PopupMenuButton(
+                            child: Icon(Icons.more_vert),
+                            itemBuilder: (context) => [
+                              PopupMenuItem(
+                                  child: ListTile(
+                                leading: Icon(Icons.edit),
+                                title: Text("Edit"),
+                                onTap: () {
+                                  MyDialog(
+                                      snapshot.child('Post').value.toString(),
+                                      snapshot.key.toString());
+                                },
+                              )),
+                              PopupMenuItem(
+                                  child: ListTile(
+                                leading: Icon(Icons.delete),
+                                title: Text("Delete"),
+                                onTap: () {
+                                  databaseRef
+                                      .child(snapshot.key.toString())
+                                      .remove();
+                                  Navigator.pop(context);
+                                },
+                              )),
+                            ],
+                          ),
                         );
                       }),
                 ),
